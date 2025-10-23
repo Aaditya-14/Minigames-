@@ -21,7 +21,7 @@ Notes: For backwards-compatibility each game folder contains a small `index.html
 
 OR start a simple local server (recommended) so that relative assets and audio load correctly:
 
-PowerShell - built-in simple server (Python required):
+PowerShell - built-in simple server (Python required):-
 
 ```powershell
 # from the project root (this folder)
