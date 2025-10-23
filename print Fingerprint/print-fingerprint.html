@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FBI Fingerprint Scanner - Memory Protocol</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="terminal-header">
+        <div class="status-bar">
+          <span class="status-text">FBI BIOMETRIC SYSTEM v2.4</span>
+          <span class="timestamp" id="timestamp"></span>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="info-panel">
+          <h1 class="title">FINGERPRINT AUTHENTICATION</h1>
+          <div class="security-level">
+            <span>SECURITY CLEARANCE:</span>
+            <span class="level" id="level">LEVEL 1</span>
+          </div>
+          <div class="attempts">
+            <span>ATTEMPTS REMAINING:</span>
+            <span class="attempts-count" id="attempts">3</span>
+          </div>
+          <div class="sequence-info">
+            <span>SEQUENCE LENGTH:</span>
+            <span class="sequence-length" id="sequenceLength">3</span>
+          </div>
+          <div class="timer-info">
+            <span>TIME REMAINING:</span>
+            <span class="timer-count" id="timer">30</span>
+          </div>
+        </div>
+
+        <div class="scanner-container">
+          <div class="fingerprint" id="fingerprint">
+            <div class="fp-node" data-node="0"></div>
+            <div class="fp-node" data-node="1"></div>
+            <div class="fp-node" data-node="2"></div>
+            <div class="fp-node" data-node="3"></div>
+            <div class="fp-node" data-node="4"></div>
+            <div class="fp-node" data-node="5"></div>
+            <div class="fp-node" data-node="6"></div>
+            <div class="fp-node" data-node="7"></div>
+            <div class="fp-node" data-node="8"></div>
+          </div>
+          <div class="scan-line" id="scanLine"></div>
+        </div>
+
+        <div class="control-panel">
+          <button class="btn btn-start" id="startBtn">INITIATE SCAN</button>
+          <div class="status-message" id="statusMessage">AWAITING INPUT...</div>
+        </div>
+
+        <div class="result-panel" id="resultPanel">
+          <div class="result-content">
+            <div class="result-icon" id="resultIcon"></div>
+            <div class="result-text" id="resultText"></div>
+            <button class="btn btn-continue" id="continueBtn">CONTINUE</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="terminal-footer">
+        <div class="footer-text">CLASSIFIED - AUTHORIZED PERSONNEL ONLY</div>
+      </div>
+    </div>
+
+    <audio id="beepSound" preload="auto">
+      <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5ebn6Onq6+zt7u/w8fLz9PX29/j5+vv8/f7/AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==" type="audio/wav" />
+    </audio>
+    <audio id="successSound" preload="auto">
+      <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYmNkZWZnqGlqa2xsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5ebn6Onq6+zt7u/w8fLz9PX29/j5+vv8/f7/AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==" type="audio/wav" />
+    </audio>
+    <audio id="failSound" preload="auto">
+      <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAAB/fn18e3p5eHd2dXRzcnFwb25tbGtqaWhnZmVkY2JhYF9eXVxbWllYV1ZVVFNSUVBPTk1MS0pJSEdGRURDQkFAPz49PDs6OTg3NjU0MzIxMC8uLSwrKikoJyYlJCMiISAfHh0cGxoZGBcWFRQTEhEQDw4NDAsKCQgHBgUEAwIBAP/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQD//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSEQ==" type="audio/wav" />
+    </audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MORSE/CRYPTO DECODE CHALLENGE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scanline"></div>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="glitch" data-text="[CLASSIFIED]">[CLASSIFIED]</div>
+            <h1 class="title">MORSE/CRYPTO DECODE CHALLENGE</h1>
+            <div class="status-bar">
+                <span class="status">STATUS: <span id="status">ACTIVE</span></span>
+                <span class="level">LEVEL: <span id="level">1</span></span>
+            </div>
+        </header>
+
+        <!-- Stats Panel -->
+        <div class="stats-panel">
+            <div class="stat-box">
+                <div class="stat-label">WORDS DECODED</div>
+                <div class="stat-value" id="score">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">HINTS LEFT</div>
+                <div class="stat-value" id="hintsLeft">💡💡💡</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">TIMER</div>
+                <div class="stat-value timer" id="timer">60</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">LIVES</div>
+                <div class="stat-value" id="lives">❤️❤️❤️</div>
+            </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector" id="modeSelector">
+            <h2 class="section-title">&gt;_ BINARY DECRYPTION MODE</h2>
+            <div class="mode-buttons">
+                <button class="mode-btn" data-mode="binary">
+                    <span class="mode-icon">01010</span>
+                    <span>BINARY CODE - DECODE THE MESSAGE</span>
+                </button>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; border: 1px solid #00ff00; background: rgba(0,255,0,0.05); font-size: 14px;">
+                <div>📌 <strong>HOW IT WORKS:</strong></div>
+                <div style="margin-top: 10px;">Each letter is converted to a 5-bit binary number (A=00001, B=00010, Z=11010)</div>
+                <div style="margin-top: 5px;">🎯 Your mission: Decode the binary sequence back into the English word!</div>
+            </div>
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-area" id="gameArea" style="display: none;">
+            <!-- Encrypted Word Display -->
+            <div class="encrypted-section">
+                <div class="section-title">&gt;_ ENCRYPTED DATA</div>
+                <div class="encrypted-word" id="encryptedWord"></div>
+                <div class="mode-info" id="modeInfo">MODE: MORSE CODE</div>
+            </div>
+
+            <!-- Hint Section -->
+            <div class="hint-section">
+                <div class="hint-label">📡 DECODED LETTERS:</div>
+                <div class="hint-text" id="hintText">_ _ _ _ _ _ _</div>
+                <div class="hint-info" id="hintInfo">💡 You have 3 hints - Each reveals one letter!</div>
+                <div class="hint-buttons">
+                    <button class="hint-btn single" id="revealBtn">
+                        <span>💡 REVEAL LETTER (3 remaining)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Decoder Reference (collapsible) -->
+            <div class="decoder-reference">
+                <button class="decoder-toggle" id="decoderToggle">
+                    &gt; SHOW DECODER REFERENCE
+                </button>
+                <div class="decoder-content" id="decoderContent" style="display: none;"></div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-section">
+                <input 
+                    type="text" 
+                    id="guessInput" 
+                    class="guess-input" 
+                    placeholder="TYPE DECODED WORD..."
+                    autocomplete="off"
+                    maxlength="20"
+                >
+                <button class="submit-btn" id="submitBtn">
+                    <span>SUBMIT DECODE</span>
+                </button>
+            </div>
+
+            <!-- Feedback -->
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div class="game-over" id="gameOver" style="display: none;">
+            <div class="game-over-content">
+                <h2 class="game-over-title" id="gameOverTitle">MISSION COMPLETE</h2>
+                <div class="final-stats">
+                    <div class="final-stat">
+                        <span class="final-label">WORDS DECODED:</span>
+                        <span class="final-value" id="finalScore">0</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="final-label">TIME SURVIVED:</span>
+                        <span class="final-value" id="timeSurvived">0s</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="final-label">HINTS USED:</span>
+                        <span class="final-value" id="hintsUsedTotal">0</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="final-label">RANK:</span>
+                        <span class="final-value" id="rank">NOVICE</span>
+                    </div>
+                </div>
+                <button class="restart-btn" id="restartBtn">
+                    <span>&gt;&gt; RESTART MISSION</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Sound Toggle -->
+        <div class="sound-toggle" id="soundToggle">
+            <span id="soundIcon">🔊</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Falling Words Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="header">
+        <div class="timer">Time: <span id="time">60</span>s</div>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="lives">Lives: <span id="lives">1</span></div>
+      </div>
+
+      <div id="game-area"></div>
+
+      <div class="input-container">
+        <input type="text" id="word-input" placeholder="Type the falling words..." autocomplete="off" disabled />
+      </div>
+
+      <div id="game-over" class="hidden">
+        <div class="game-over-content">
+          <div class="result-icon" id="result-icon">🏆</div>
+          <h2 id="result-message"></h2>
+          <div class="score-display">
+            <span class="score-label">Final Score</span>
+            <span class="score-value" id="final-score"></span>
+          </div>
+          <button id="restart-btn">Play Again</button>
+        </div>
+      </div>
+
+      <button id="start-btn">Start Game</button>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>

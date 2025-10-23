@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math IQ Blitz - True or False</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="stars"></div>
+    <div class="container">
+      <header>
+        <h1 class="title">MATH IQ BLITZ</h1>
+        <p class="subtitle">True or False Challenge</p>
+      </header>
+
+      <div id="menu" class="menu">
+        <div class="game-rules">
+          <p class="rule">⚡ One wrong answer = Game Over</p>
+          <p class="rule">⏱️ 5 seconds per question</p>
+          <p class="rule">🧠 Answer all 10 questions</p>
+        </div>
+        <button class="btn btn-primary" onclick="startGame()">
+          START GAME
+        </button>
+        <button class="btn btn-secondary" onclick="toggleSound()">
+          <span id="soundIcon">🔊</span> SOUND
+        </button>
+      </div>
+
+      <div id="game" class="game hidden">
+        <div class="game-header">
+          <div class="info-box">
+            <span class="label">QUESTION</span>
+            <span class="value" id="questionNum">1/10</span>
+          </div>
+          <div class="info-box">
+            <span class="label">TIME</span>
+            <span class="value" id="timer">5</span>
+          </div>
+        </div>
+
+        <div class="equation-container">
+          <div class="equation" id="equation">7 × 8 = 56</div>
+        </div>
+
+        <div class="button-container">
+          <button class="btn btn-false" onclick="answer(false)">
+            <span class="btn-icon">✗</span>
+            <span class="btn-text">FALSE</span>
+          </button>
+          <button class="btn btn-true" onclick="answer(true)">
+            <span class="btn-icon">✓</span>
+            <span class="btn-text">TRUE</span>
+          </button>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div id="gameOver" class="game-over hidden">
+        <h2 class="game-over-title">GAME OVER</h2>
+        <div class="final-stats">
+          <div class="final-stat">
+            <span class="final-label">Correct Answers</span>
+            <span class="final-value" id="correctAnswers">0</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="restartGame()">
+          PLAY AGAIN
+        </button>
+        <button class="btn btn-secondary" onclick="backToMenu()">MENU</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

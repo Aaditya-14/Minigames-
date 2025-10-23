@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Word Memory Challenge 🧠</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div id="startScreen" class="screen active">
+      <div class="top-actions">
+        <button id="muteToggle" class="chip" aria-pressed="false">🔊 Sound</button>
+      </div>
+      <h1>🔄 Repeat Word Challenge</h1>
+      <p class="subtitle">Spot the repeated words and win!</p>
+
+      <div class="instructions">
+        <h3>📖 How to Play:</h3>
+        <ul>
+          <li>Words will appear one by one.</li>
+          <li>Click <strong style="color: var(--danger);">REPEAT</strong> if you've seen the word before in this round.</li>
+          <li>Click <strong style="color: var(--primary);">NEW</strong> if it's the first time you've seen the word.</li>
+          <li><strong style="color: var(--danger);">One wrong answer ends the game!</strong></li>
+          <li>Beat the clock and reach the repeat goal to win! 🏆</li>
+        </ul>
+      </div>
+
+      <button id="startBtn" class="btn">Start Game 🚀</button>
+      <div class="keyboard-hint">
+        💡 Keyboard: <kbd>←</kbd> / <kbd>R</kbd> for REPEAT, <kbd>→</kbd> / <kbd>N</kbd> for NEW
+      </div>
+    </div>
+
+    <div id="gameScreen" class="screen">
+      <div class="top-actions">
+        <div class="chip" id="pauseBtn" aria-pressed="false">⏸️ Pause</div>
+        <div class="chip" id="resumeBtn" style="display:none">▶️ Resume</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-label">⏱️ Time</div>
+          <div class="stat-value" id="timer">25.0s</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Words</div>
+          <div class="stat-value" id="wordCount">0/20</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Repeats Found</div>
+          <div class="stat-value" id="repeatsFound">0/10</div>
+        </div>
+      </div>
+
+      <div id="wordDisplay" class="word-display">READY</div>
+
+      <div class="answer-buttons">
+        <button id="repeatBtn" class="answer-btn repeat-btn">REPEAT</button>
+        <button id="newBtn" class="answer-btn new-btn">NEW</button>
+      </div>
+
+      <div class="keyboard-hint">
+        Press <kbd>←</kbd> / <kbd>R</kbd> for REPEAT | <kbd>→</kbd> / <kbd>N</kbd> for NEW
+      </div>
+    </div>
+
+    <div id="resultScreen" class="screen">
+      <div class="result-content" style="text-align:center">
+        <div class="result-icon" id="resultIcon" style="font-size:6rem">🏆</div>
+        <h2 class="result-title" id="resultTitle" style="color:var(--primary);font-weight:800;margin:10px 0 20px">Excellent!</h2>
+        <p class="result-message" id="resultMessage" style="font-size:1.1rem;color:#64748b;margin-bottom:30px"></p>
+
+        <div class="result-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin:20px 0">
+          <div class="stat-card">
+            <div class="stat-label">✅ Correct</div>
+            <div class="stat-value" id="correctAnswers" style="color:var(--success)">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">❌ Wrong</div>
+            <div class="stat-value" id="wrongAnswers" style="color:var(--danger)">0</div>
+          </div>
+        </div>
+
+        <button id="restartBtn" class="btn">Play Again 🎮</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="feedback" class="feedback"></div>
+  <div id="countdown" class="countdown-overlay">
+    <div class="countdown-number" id="countNum">3</div>
+  </div>
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

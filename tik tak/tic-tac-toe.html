@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="tiktac.css">
+</head>
+<body>
+    <div class="modal-overlay hidden" id="name-modal">
+        <div class="modal">
+            <h2>Welcome to Tic Tac Toe!</h2>
+            <p>Choose your game mode and enter player details</p>
+            <form id="name-form">
+                <div class="game-mode-selection">
+                    <div class="mode-option">
+                        <input type="radio" id="pvp-mode" name="gameMode" value="pvp" checked>
+                        <label for="pvp-mode" class="mode-label">
+                            <span class="mode-icon">👥</span>
+                            <span class="mode-title">Player vs Player</span>
+                        </label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" id="bot-mode" name="gameMode" value="bot">
+                        <label for="bot-mode" class="mode-label">
+                            <span class="mode-icon">🤖</span>
+                            <span class="mode-title">Play with Bot</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="player-inputs">
+                    <div class="input-group">
+                        <label for="player1-name">Player 1 (X):</label>
+                        <input type="text" id="player1-name" placeholder="Enter Player 1 name" maxlength="15" required>
+                    </div>
+                    <div class="input-group" id="player2-group">
+                        <label for="player2-name">Player 2 (O):</label>
+                        <input type="text" id="player2-name" placeholder="Enter Player 2 name" maxlength="15" required>
+                    </div>
+                    <div class="input-group hidden" id="bot-difficulty-group">
+                        <label for="bot-difficulty">Bot Difficulty:</label>
+                        <select id="bot-difficulty" class="difficulty-select">
+                            <option value="easy">Easy 😊</option>
+                            <option value="medium" selected>Medium 😐</option>
+                            <option value="hard">Hard 😈</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-start">Start Game</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div class="game-info">
+            <div class="player-turn">
+                <span id="current-player">Player X's Turn</span>
+            </div>
+            <div class="game-status">
+                <span id="game-status"></span>
+            </div>
+        </div>
+
+        <div class="game-board" id="game-board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+
+        <div class="controls">
+            <button id="reset-btn" class="btn">Reset Game</button>
+            <button id="change-names-btn" class="btn btn-secondary">Change Names</button>
+        </div>
+
+        <div class="score-board">
+            <div class="score">
+                <span><span id="player1-display">Player X</span>: <span id="score-x">0</span></span>
+            </div>
+            <div class="score">
+                <span><span id="player2-display">Player O</span>: <span id="score-o">0</span></span>
+            </div>
+            <div class="score">
+                <span>Draws: <span id="score-draw">0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="winner-modal">
+        <div class="modal">
+            <h2 id="winner-modal-title">Game Over!</h2>
+            <p id="winner-message"></p>
+            <button id="play-again-btn" class="btn">Play Again</button>
+        </div>
+    </div>
+
+    <script src="tiktac.js"></script>
+</body>
+</html>

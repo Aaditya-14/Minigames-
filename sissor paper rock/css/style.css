@@ -1,0 +1,59 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --accent:#06b6d4;
+  --muted:#94a3b8;
+  --win:#16a34a;
+  --lose:#dc2626;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+  background:linear-gradient(180deg,var(--bg),#071126 70%);
+  color:#e6eef8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+}
+.container{
+  width:100%;
+  max-width:720px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:12px;
+  padding:28px;
+  box-shadow:0 10px 30px rgba(2,6,23,0.8);
+}
+h1{margin:0 0 12px 0; text-align:center}
+.scoreboard{display:flex;gap:12px;justify-content:center;margin-bottom:16px}
+.score{background:rgba(255,255,255,0.03); padding:10px 14px;border-radius:10px}
+.choices{display:flex;gap:14px;justify-content:center;margin-bottom:18px}
+.choice{background:var(--card);border:1px solid rgba(255,255,255,0.03);padding:12px 18px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:transform .14s ease, box-shadow .14s ease}
+.choice img{width:48px;height:48px}
+.choice:hover{transform:translateY(-6px);box-shadow:0 8px 18px rgba(2,6,23,0.6)}
+/* icon wrapper for inline SVGs */
+.choice .icon{width:48px;height:48px;display:inline-block}
+.choice .icon svg{width:100%;height:100%;display:block}
+
+/* selection animation */
+.choice.animating{animation:pop .24s ease}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
+
+/* bot selection highlight */
+.bot-choose{animation:shake .35s ease}
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}100%{transform:translateX(0)}}
+.result{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;text-align:center}
+.hands{display:flex;gap:12px;justify-content:center;margin-top:8px}
+.hand{opacity:.9}
+.controls{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:14px}
+#reset{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer}
+.toggle{display:flex;gap:8px;align-items:center;color:var(--muted)}
+#message{font-weight:600;padding:6px 8px}
+.win{color:var(--win)}
+.lose{color:var(--lose)}
+.draw{color:var(--accent)}
+@media (max-width:520px){
+  .choices{flex-direction:column}
+}

@@ -1,0 +1,537 @@
+/* ============================================
+   GLOBAL RESET
+   ============================================ */
+/* Remove default browser spacing and set consistent box sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================
+   BODY & BACKGROUND
+   ============================================ */
+/* Main page background with purple gradient and animated effects */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1e0533 0%, #3d0066 50%, #6b0f9e 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animated radial gradient overlay for depth effect */
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(138, 43, 226, 0.2) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(147, 51, 234, 0.2) 0%,
+      transparent 50%
+    );
+  animation: pulse 8s ease-in-out infinite;
+}
+
+/* Pulsing animation for background effect */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ============================================
+   GAME CONTAINER
+   ============================================ */
+/* Main game box with glassmorphism effect */
+.game-container {
+  width: 900px;
+  height: 650px;
+  background: rgba(20, 10, 40, 0.85); /* Semi-transparent dark background */
+  backdrop-filter: blur(20px); /* Blur effect for glassmorphism */
+  border-radius: 30px;
+  border: 2px solid rgba(147, 51, 234, 0.3);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1); /* Multiple shadows for depth */
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Animated shimmer line at top of container */
+.game-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(147, 51, 234, 0.8),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
+/* Shimmer animation moves gradient left to right */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================
+   HEADER (Score, Time, Lives Display)
+   ============================================ */
+/* Top bar showing game stats */
+.header {
+  display: flex;
+  justify-content: space-around;
+  padding: 25px;
+  background: linear-gradient(
+    180deg,
+    rgba(147, 51, 234, 0.2) 0%,
+    transparent 100%
+  );
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(147, 51, 234, 0.5);
+  border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+}
+
+/* Individual stat containers */
+.header > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Stat values (numbers) */
+.header span {
+  color: #c084fc;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* ============================================
+   GAME AREA (Where Words Fall)
+   ============================================ */
+/* Container for falling words */
+#game-area {
+  width: 100%;
+  height: 480px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(147, 51, 234, 0.05) 100%
+  );
+}
+
+/* ============================================
+   FALLING WORDS
+   ============================================ */
+/* Individual falling word styling */
+.falling-word {
+  position: absolute;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  padding: 14px 28px;
+  border-radius: 16px;
+  border: 2px solid rgba(192, 132, 252, 0.4);
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.2s;
+  animation: fall linear; /* Animation duration set dynamically in JS */
+  letter-spacing: 1px;
+}
+
+/* Glossy overlay effect on words */
+.falling-word::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 100%
+  );
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+/* Animation for words falling from top to bottom */
+@keyframes fall {
+  from {
+    top: -60px;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  5% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    top: 480px;
+  }
+}
+
+/* Style when word is correctly typed (matched) */
+.falling-word.matched {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%); /* Green */
+  border-color: rgba(52, 211, 153, 0.6);
+  transform: scale(1.3) rotate(5deg); /* Grow and rotate slightly */
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   INPUT FIELD
+   ============================================ */
+/* Container for typing input */
+.input-container {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+}
+
+/* Text input field styling */
+#word-input {
+  width: 100%;
+  padding: 18px 24px;
+  font-size: 20px;
+  font-weight: 500;
+  background: rgba(20, 10, 40, 0.6);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(147, 51, 234, 0.5);
+  border-radius: 16px;
+  outline: none;
+  text-align: center;
+  color: #fff;
+  transition: all 0.3s;
+  letter-spacing: 1px;
+}
+
+/* Placeholder text color */
+#word-input::placeholder {
+  color: rgba(192, 132, 252, 0.5);
+}
+
+/* Input field when focused (active) */
+#word-input:focus {
+  border-color: #a855f7;
+  background: rgba(20, 10, 40, 0.8);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: scale(1.02); /* Slightly grow when focused */
+}
+
+/* Input field when disabled (game not active) */
+#word-input:disabled {
+  background: rgba(20, 10, 40, 0.3);
+  border-color: rgba(147, 51, 234, 0.2);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ============================================
+   BUTTONS (Start & Restart)
+   ============================================ */
+/* Start button - shown initially in center of game */
+#start-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 22px 50px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  border: 2px solid rgba(192, 132, 252, 0.4);
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+/* Restart button - shown only in game over screen */
+#restart-btn {
+  position: relative;
+  padding: 22px 50px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  border: 2px solid rgba(192, 132, 252, 0.4);
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Button hover effect */
+#start-btn:hover,
+#restart-btn:hover {
+  box-shadow: 0 20px 50px rgba(124, 58, 237, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #8b5cf6 0%, #c084fc 100%);
+  transform: scale(1.08);
+}
+
+#start-btn:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* Button click effect */
+#start-btn:active,
+#restart-btn:active {
+  transform: scale(1.02);
+}
+
+#start-btn:active {
+  transform: translate(-50%, -50%) scale(1.02);
+}
+
+/* ============================================
+   GAME OVER SCREEN
+   ============================================ */
+/* Full-screen overlay for game over */
+#game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8); /* Dark overlay */
+  backdrop-filter: blur(15px);
+  z-index: 100;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Fade in animation for game over screen */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   GAME OVER CONTENT BOX
+   ============================================ */
+/* Main content box in game over screen */
+.game-over-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 10, 40, 0.98) 0%,
+    rgba(30, 5, 51, 0.98) 100%
+  );
+  backdrop-filter: blur(30px);
+  padding: 60px 80px;
+  border-radius: 35px;
+  border: 3px solid rgba(147, 51, 234, 0.5);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 80px rgba(124, 58, 237, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -2px 20px rgba(147, 51, 234, 0.2);
+  position: relative;
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy scale-in */
+  min-width: 450px;
+}
+
+/* Scale-in animation with bounce effect */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animated gradient border effect */
+.game-over-content::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    #7c3aed,
+    #a855f7,
+    #c084fc,
+    #a855f7,
+    #7c3aed
+  );
+  background-size: 300% 300%;
+  border-radius: 35px;
+  z-index: -1;
+  opacity: 0.6;
+  animation: gradientShift 3s ease infinite;
+  filter: blur(10px);
+}
+
+/* Gradient shifting animation for border */
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ============================================
+   RESULT ICON (Trophy or Skull)
+   ============================================ */
+/* Large emoji icon at top of game over screen */
+.result-icon {
+  font-size: 80px;
+  animation: bounce 0.6s ease-in-out;
+  filter: drop-shadow(0 10px 30px rgba(168, 85, 247, 0.6));
+}
+
+/* Bounce animation for icon */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* ============================================
+   RESULT MESSAGE (Victory/Game Over Text)
+   ============================================ */
+/* Main heading in game over screen */
+#game-over h2 {
+  font-size: 52px;
+  margin: 0;
+  background: linear-gradient(135deg, #a855f7 0%, #e879f9 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  filter: drop-shadow(0 4px 20px rgba(168, 85, 247, 0.5));
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Glowing animation for text */
+@keyframes glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 4px 20px rgba(168, 85, 247, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 4px 40px rgba(168, 85, 247, 0.8));
+  }
+}
+
+/* ============================================
+   SCORE DISPLAY BOX
+   ============================================ */
+/* Container for final score in game over screen */
+.score-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 30px 50px;
+  background: rgba(124, 58, 237, 0.15);
+  border-radius: 20px;
+  border: 2px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 10px 40px rgba(124, 58, 237, 0.3),
+    inset 0 2px 10px rgba(168, 85, 247, 0.1);
+  min-width: 280px;
+}
+
+/* "Final Score" label */
+.score-label {
+  font-size: 18px;
+  color: #c084fc;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Actual score number */
+.score-value {
+  font-size: 56px;
+  color: #fff;
+  font-weight: 900;
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.8),
+    0 0 40px rgba(168, 85, 247, 0.4);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Pulsing animation for score value */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+/* Hide elements */
+.hidden {
+  display: none !important;
+}

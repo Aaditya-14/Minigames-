@@ -1,0 +1,408 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Courier New", monospace;
+  background: #0a0a0a;
+  color: #00ff00;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  background: #000;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3),
+    inset 0 0 20px rgba(0, 255, 0, 0.05);
+  padding: 20px;
+}
+
+.terminal-header {
+  border-bottom: 2px solid #00ff00;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.status-text {
+  animation: flicker 3s infinite;
+}
+
+.timestamp {
+  color: #00cc00;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.main-content {
+  padding: 20px 0;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00ff00;
+  letter-spacing: 3px;
+}
+
+.info-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 15px;
+  border: 1px solid #00ff00;
+  background: rgba(0, 255, 0, 0.02);
+}
+
+.info-panel > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-left: 3px solid #00ff00;
+  padding-left: 10px;
+}
+
+/* Info panel sections styling */
+.security-level,
+.attempts,
+.sequence-info,
+.timer-info {
+  font-size: 14px;
+}
+
+/* Info panel value styling */
+.level,
+.attempts-count,
+.sequence-length,
+.timer-count {
+  color: #00ff00;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+/* Timer warning colors - changes based on time remaining */
+.timer-count.warning {
+  color: #ffff00;
+  text-shadow: 0 0 5px #ffff00;
+}
+
+.timer-count.danger {
+  color: #ff0000;
+  text-shadow: 0 0 5px #ff0000;
+  animation: blink 0.5s infinite;
+}
+
+/* Blinking animation for critical timer */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.scanner-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 30px auto;
+  border: 3px solid #00ff00;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  box-shadow: 0 0 40px rgba(0, 255, 0, 0.4), inset 0 0 40px rgba(0, 255, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fingerprint {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px;
+}
+
+.fp-node {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #00ff00;
+  border-radius: 50%;
+  background: rgba(0, 255, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.fp-node::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.fp-node:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #00ff00;
+}
+
+.fp-node.glow {
+  background: #00ff00;
+  box-shadow: 0 0 20px #00ff00, inset 0 0 10px #00ff00;
+  animation: pulse 0.5s ease;
+}
+
+.fp-node.glow::before {
+  background: #00ff00;
+}
+
+.fp-node.correct {
+  background: #00ff00;
+  box-shadow: 0 0 20px #00ff00;
+}
+
+.fp-node.wrong {
+  background: #ff0000;
+  border-color: #ff0000;
+  box-shadow: 0 0 20px #ff0000;
+  animation: shake 0.5s ease;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00ff00, transparent);
+  box-shadow: 0 0 10px #00ff00;
+  opacity: 0;
+  animation: scan 2s linear infinite;
+}
+
+.scan-line.active {
+  opacity: 1;
+}
+
+@keyframes scan {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+.control-panel {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn {
+  background: transparent;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  padding: 15px 40px;
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.btn:hover {
+  background: #00ff00;
+  color: #000;
+  box-shadow: 0 0 20px #00ff00;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background: transparent;
+  color: #00ff00;
+  box-shadow: none;
+}
+
+.status-message {
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: center;
+  min-height: 30px;
+  padding: 10px;
+  border: 1px solid #00ff00;
+  background: rgba(0, 255, 0, 0.05);
+  letter-spacing: 1px;
+}
+
+.result-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.result-panel.show {
+  display: flex;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.result-content {
+  text-align: center;
+  border: 3px solid #00ff00;
+  padding: 50px;
+  background: #000;
+  box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+}
+
+.result-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.result-text {
+  font-size: 24px;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+
+.result-panel.success .result-content {
+  border-color: #00ff00;
+}
+
+.result-panel.fail .result-content {
+  border-color: #ff0000;
+}
+
+.result-panel.fail .result-text,
+.result-panel.fail .btn {
+  color: #ff0000;
+  border-color: #ff0000;
+}
+
+.result-panel.fail .btn:hover {
+  background: #ff0000;
+  color: #000;
+}
+
+.terminal-footer {
+  border-top: 2px solid #00ff00;
+  padding-top: 10px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .info-panel {
+    grid-template-columns: 1fr;
+    font-size: 12px;
+  }
+
+  .scanner-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .fingerprint {
+    width: 170px;
+    height: 170px;
+    gap: 10px;
+  }
+
+  .fp-node {
+    width: 35px;
+    height: 35px;
+  }
+}
